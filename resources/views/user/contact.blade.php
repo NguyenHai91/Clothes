@@ -48,7 +48,7 @@
 					<div class="clearfix">
 						<label for="phone"><span>Phone:</span></label>
 						<div class="input">
-							<input tabindex="2" size="25" id="phone" name="txtPhone" type="text" value="{{old('txtName',isset($user)? $user->phone : '')}}" class="input-xlarge" placeholder="Phone Number">
+							<input tabindex="2" size="25" id="phone" name="txtPhone" type="text" value="{{old('txtPhone',isset($user)? $user->phone : '')}}" class="input-xlarge" placeholder="Phone Number">
 						</div>
 					</div>
 

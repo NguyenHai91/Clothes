@@ -3,10 +3,10 @@
 	<ul class="small-product">
 		@foreach($bestSeller as $item)
 		<li>
-			<a href="#" title="Praesent tempor sem sodales">
+			<a href="product_detail/{{$item->id}}" title="Praesent tempor sem sodales">
 				<img src="upload/{{$item['image']}}" alt="Praesent tempor sem sodales">
 			</a>
-			<a href="#">{{$item['name']}}</a>
+			<a href="product_detail/{{$item->id}}">{{$item['name']}}</a>
 		</li>
 		@endforeach
 	</ul>

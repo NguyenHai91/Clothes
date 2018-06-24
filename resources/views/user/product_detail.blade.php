@@ -12,9 +12,7 @@
 				<div class="span4">
 					<a href="" class="thumbnail" data-fancybox-group="group1" title="Description 1"><img alt="" src="upload/{{$product['image']}}"></a>												
 					<ul class="thumbnails small">
-						
 						@foreach($product->productImages as $item)	
-
 						<li class="span1">
 							<a href="themes/images/ladies/2.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 2"><img src="upload/{{$item['image']}}" alt=""></a>
 						</li>								
@@ -33,17 +31,14 @@
 				<div class="span5">
 					<form action="" class="form-inline" method="post">
 						<input type="hidden" name="_token" value="{{csrf_token('')}}">
-						{{-- <label class="checkbox">
-							<input type="checkbox" value=""> Option one is this and that
-						</label>
-						<br/>
-						<label class="checkbox">
-							<input type="checkbox" value=""> Be sure to include why it's great
-						</label> --}}
 						<p>&nbsp;</p>
 						<label>Qty:</label>
-						<input type="text" class="span1"  value="1" name="txtQuant">
+						<input class="span1 quantity" type="text" value="1" name="txtQuant" data="{{$product->id}}">
 						<button class="btn btn-inverse" type="submit">Add to cart</button>
+						<div class="detail-alert alert alert-danger " style="display: none">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<strong>Title !  </strong><span class="message"></span>
+						</div>
 					</form>
 				</div>							
 			</div>
@@ -85,10 +80,8 @@
 							$relate1 = array();
 							$relate2 = array();
 							$relate3 = array();
-							for($i=0; $i < count($relateProduct); $i++) {
-								
-
-								if($i<3) {
+							for($i = 0; $i < count($relateProduct); $i++) {
+								if($i < 3) {
 									array_push($relate1, $relateProduct[$i]);
 								} else if($i >= 3 && $i < 6){
 									array_push($relate2, $relateProduct[$i]);
@@ -101,6 +94,7 @@
 							<div class="active item">
 								<ul class="thumbnails listing-products">
 									@foreach($relate1 as $item)
+									@if($item->id != $product->id)
 									<li class="span3">
 										<div class="product-box">
 											<span class="sale_tag"></span>	<a href="product_detail/{{$item->id}}"><img alt="" src="upload/{{$item->image}}"></a><br/>
@@ -109,6 +103,7 @@
 											<p class="price">${{$item->price}}</p>
 										</div>
 									</li>
+									@endif
 									@endforeach												
 								</ul>
 							</div>
@@ -117,6 +112,7 @@
 							<div class="item">
 								<ul class="thumbnails listing-products">
 									@foreach($relate2 as $item)
+									@if($item->id != $product->id)
 									<li class="span3">
 										<div class="product-box">
 											<span class="sale_tag"></span>	<a href="product_detail/{{$item->id}}"><img alt="" src="upload/{{$item->image}}"></a><br/>
@@ -124,7 +120,8 @@
 											<a href="category/{{$item['category_id']}}" class="category">Suspendisse aliquet</a>
 											<p class="price">${{$item->price}}</p>
 										</div>
-									</li>      
+									</li>  
+									@endif    
 									@endforeach
 								</ul>
 							</div>
@@ -133,6 +130,7 @@
 							<div class="item">
 								<ul class="thumbnails listing-products">
 									@foreach($relate3 as $item)
+									@if($item->id != $product->id)
 									<li class="span3">
 										<div class="product-box">
 											<span class="sale_tag"></span>	<a href="product_detail/{{$item->id}}"><img alt="" src="upload/{{$item->image}}"></a><br/>
@@ -140,7 +138,8 @@
 											<a href="category/{{$item['category_id']}}" class="category">Suspendisse aliquet</a>
 											<p class="price">${{$item->price}}</p>
 										</div>
-									</li>      
+									</li>   
+									@endif  
 									@endforeach
 								</ul>
 							</div>
@@ -151,7 +150,7 @@
 			</div>
 		</div>
 		<div class="span3 col">
-			@include('user.layout.sub_category')
+			
 			@include('user.layout.random_block')
 			@include('user.layout.bestseller_block')
 		</div>
@@ -171,13 +170,35 @@
 		})
 	})
 	$(document).ready(function() {
-		$('.thumbnail').fancybox({
-			openEffect  : 'none',
-			closeEffect : 'none'
-		});
+		// $('.thumbnail').fancybox({
+		// 	openEffect  : 'none',
+		// 	closeEffect : 'none'
+		// });
 		
 		$('#myCarousel-2').carousel({
 			interval: 2500
+		});
+		$('input.quantity').blur(function (e) {
+			$qty = $(this).val();
+			$id = $(this).attr('data');
+			$alert = $('div.detail-alert');
+			$msg = $alert.find('span.message');
+			$.ajax({
+				'type': 'GET',
+				'url': 'product_detail/update/'+$id+ '/'+ $qty,
+				'cache': false,
+				'data':{'id':$id, 'qty':$qty},
+				success: function (response) {
+					$alert.css('display','none');
+					if (response['status'] == 'error') {
+						$('input.quantity').val('1');
+						$alert.css('display','block');
+						$msg.text(response['error']);
+
+					}
+				}
+
+			});
 		});								
 	});
 </script>

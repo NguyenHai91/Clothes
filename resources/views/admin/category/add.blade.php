@@ -15,11 +15,19 @@
 
     <form action="admin/category/add" method="POST">
         <input type="hidden" name="_token" value="{{csrf_token('')}}">
-        
+        <div class="form-group">
+            <label>Gender:</label>
+            <label class="radio-inline">
+                <input name="rdoGender" value="1" type="radio">Men
+            </label>
+            <label class="radio-inline">
+                <input name="rdoGender" value="0" type="radio">Women
+            </label>
+        </div>
         <div class="form-group">
             <label>Category Parent</label>
             <select class="form-control" name="slcParent">
-                <option value="">Please Choose Category</option>
+                <option value="0">Root Category</option>
                 @foreach($parent as $item)
                 <option value="{{$item['id']}}">{{$item['name']}}</option>
                 @endforeach

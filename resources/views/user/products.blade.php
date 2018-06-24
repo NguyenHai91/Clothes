@@ -10,15 +10,14 @@
 	<div class="row">						
 		<div class="span9">								
 			<ul class="thumbnails listing-products">
-
-				@foreach($product as $item)
-
+				
+				@foreach($products as $item)
 				<li class="span3">
 					<div class="product-box">
-						<span class="sale_tag"></span>												
+						<span class="sale_tag"></span>					
 						<a href="product_detail/{{$item['id']}}"><img alt="" src="upload/{{$item['image']}}"></a><br/>
 						<a href="product_detail/{$item['id']}" class="title">{{$item['name']}}</a><br/>
-						<a href="#" class="category">Phasellus consequat</a>
+						<a href="category/brand/{{$item['brand']}}" class="category">{{$item['brand']}}</a>
 						<p class="price">${{$item['price']}}</p>
 					</div>
 				</li>       
@@ -26,7 +25,7 @@
 			</ul>								
 			<hr>
 			<div class="pagination pagination-small pagination-centered">
-				{{$product->links()}}
+				{{$products->links()}}
 				{{-- <ul>
 								<li><a href="#">Prev</a></li>
 								<li class="active"><a href="#">1</a></li>
@@ -38,7 +37,7 @@
 						</div>
 					</div>
 					<div class="span3 col">
-						@include('user.layout.sub_category')
+						
 						@include('user.layout.random_block')
 						@include('user.layout.bestseller_block')
 						

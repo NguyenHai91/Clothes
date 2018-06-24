@@ -8,9 +8,18 @@
     <form action="" method="POST">
         <input type="hidden" name="_token" value="{{csrf_token('')}}">
         <div class="form-group">
+            <label>Gender:</label>
+            <label class="radio-inline">
+                <input name="rdoGender" {{$item['gender'] == 1 ? 'checked' : ''}} value="1" type="radio">Men
+            </label>
+            <label class="radio-inline">
+                <input name="rdoGender" {{$item['gender'] == 0 ? 'checked' : ''}} value="0" type="radio">Women
+            </label>
+        </div>
+        <div class="form-group">
             <label>Category Parent</label>
             <select class="form-control" name="slcParent">
-                <option value="">Please Choose Category</option>
+                <option value="0">Root Category</option>
                 @foreach($listCate as $item)
                 @if($item['name'] !== $cate['name'])
                 <option value="{{$item['id']}}" {{

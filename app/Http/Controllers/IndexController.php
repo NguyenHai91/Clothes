@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use App\Http\Requests;
 use App\Product;
@@ -10,9 +12,12 @@ use App\Category;
 use Illuminate\Pagination\Paginator;
 use Cart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use App\Transaction;
 use App\Order;
 use App\Contact;
+use App\User;
+use Mail;
 
 class IndexController extends Controller
 {
@@ -21,8 +26,10 @@ class IndexController extends Controller
 		if (Auth::check()) {
 			view()->share('user', Auth::user());
 		}
-
+		
 		$cate = Category::all();
+		$sportCates = Category::where('parent_id','=',39)->orWhere('parent_id','=',40)->get();
+		$accessoryCates = Category::where('parent_id','=',41)->orWhere('parent_id','=',42)->get();
 		$randProducts = Product::all()->random()->take(10)->get();
 		$bestSeller = Product::select('*')->orderBy('number_order','desc')->take(3)->get();
 		$brand = Product::select('brand')->distinct()->get();
@@ -31,21 +38,55 @@ class IndexController extends Controller
 		view()->share('randProducts', $randProducts);
 		view()->share('bestSeller', $bestSeller);
 		view()->share('brand', $brand);
-
+		view()->share('sportCates', $sportCates);
+		view()->share('accessoryCates', $accessoryCates);
 	}
-	public function index()
+	public function index(Request $request)
 	{
 		$featureProducts = Product::select('*')->orderBy('view','DESC')->take(8)->get()->toArray();
 		$latestProducts = Product::select('*')->orderBy('created_at','DESC')->take(8)->get()->toArray();
+		$email = $request->cookie('email');
+		return view('user.index',compact('featureProducts', 'latestProducts', 'email'));
 		
-		return view('user.index',compact('featureProducts', 'latestProducts'));
+	}
+	public function getProductSearch($txtSearch)
+	{
+		$products = Product::where('name','like',"%$txtSearch%")->orWhere('brand','like',"%$txtSearch%")->paginate(6);
+		return view('user.products', compact('products'));
+	}
+	public function postProductSearch(Request $request)
+	{
+		if ($request->txtSearch != '') {
+			$txtSearch = $request->txtSearch;
+			
+			return redirect('products/search/'.$txtSearch);
+		} else {
+			return redirect()->back();
+		}
 		
+
+	}
+	public function getProductWomen()
+	{
+		$products = Product::where('gender','=',0)->take(30)->paginate(6);
+		
+		return view('user.products', compact('products'));
+	}
+	public function getProductMen()
+	{
+		$products = Product::where('gender','=',1)->take(30)->paginate(6);
+		return view('user.products', compact('products'));
+	}
+	public function getProductBestSeller()
+	{
+		$products = Product::select('*')->orderBy('view','esc')->take(50)->paginate(6);
+		return view('user.products', compact('products'));
 	}
 	public function getProductInCategory($cateId)
 	{
-		$product = Product::where('category_id','=',$cateId)->orderBy('created_at','desc')->paginate(6);
+		$products = Product::where('category_id','=',$cateId)->orderBy('created_at','desc')->paginate(6);
 
-		return view('user.products', compact('product'));
+		return view('user.products', compact('products'));
 	}
 	public function getProductInBrand($brandname)
 	{
@@ -70,6 +111,19 @@ class IndexController extends Controller
 		$productInCart = Cart::content();
 		return redirect('cart');
 	}
+	public function updateProductDetail($id, $qty)
+	{
+		
+		$product = Product::find($id);
+		
+		if ($product->quantity < $qty) {
+			$maxQty = $product->quantity;
+			$error = "Quantity not enough, only ". $maxQty ." items in store !";
+			$data = ['status' => 'error','error' => $error];
+			return $data;
+		}
+		
+	}
 	public function getCart()
 	{
 		$randProducts = Product::all()->random()->take(10)->get();
@@ -86,21 +140,34 @@ class IndexController extends Controller
 		Cart::remove($rowId);
 		return redirect('cart');
 	}
-	public function updateCart($id, $qty)
+	public function updateCart($rowId, $qty)
 	{
-		$item = Cart::update($id, $qty);
-		$price = (Cart::get($id)->price);
-		$sum =  $price * $qty;
-		(string)$sum;
-		$subtotal = Cart::subtotal();
-		$total = Cart::total();
-		$data = ['sumPrice'=>$sum, 'subtotal'=>$subtotal, 'total'=>$total];
-		return redirect('cart');
+		$item = Cart::get($rowId);
+		$id = $item->id;
+		$product = Product::find($id);
+		$maxQty = $product->quantity;
+		if ($product->quantity >= $qty) {
+			Cart::update($rowId, $qty);
+			$price = (Cart::get($rowId)->price);
+			$sum =  $price * $qty;
+			(string)$sum;
+			$subtotal = Cart::subtotal();
+			$total = Cart::total();
+			$data = ['status'=>'success','sumPrice'=>$sum, 'subtotal'=>$subtotal, 'total'=>$total];
+			return $data;
+		} else {
+			$error = 'Quantity not enough, only '. $maxQty . ' items in store !';
+			$data = ['status'=>'error','error'=>$error];
+			return $data;
+		}
+		
 	}
 
-	public function getLogin()
+
+	public function getLogin(Request $request)
 	{
-		return view('user.login_register');
+		$emailCookie = $request->cookie('email');
+		return view('user.login_register', compact('emailCookie'));
 	}
 	public function postLogin(Request $request)
 	{
@@ -113,9 +180,50 @@ class IndexController extends Controller
 				'txtPass.required'=>'Password not empty !',
 			]);
 		if (Auth::attempt(['email'=>$request['txtEmail'],'password'=>$request['txtPass']])) {
-			return redirect('index');
+			if (!Cookie::has('email')) {
+				$response = new Response; 
+				//$response->withCookie('email', $request['txtEmail'], 1);
+				return redirect('index')->withCookie('email', $request['txtEmail'], 1);
+			}
 		} else {
-			return redirect('login_register');
+			return redirect('/');
+		}
+	}
+	public function postRegister(Request $request)
+	{
+		$this->validate($request,
+			[
+				'txtUser'=>'required',
+				'txtEmail'=>'required|unique:users,email',
+				'txtFullName'=>'required',
+				'txtPhone'=>'required',
+				'txtAddress'=>'required',
+				'txtRePass'=>'required|same:txtPass',
+
+			],[
+				'txtUser.required'=>'User not empty !',
+				'txtEmail.required'=>'Email not empty !',
+				'txtEmail.unique'=>'Email exist !',
+				'txtFullName.required'=>'Fullname not empty !',
+				'txtPhone.required'=>'Phone not empty !',
+				'txtAddress.required'=>'Address not empty !',
+				'txtPass.required'=>'Password not empty !',
+				'txtRePass.same'=>'Password not same !',
+			]);
+		$user = new User;
+		$user->username = $request->txtUser;
+		$user->email = $request->txtEmail;
+		$user->phone = $request->txtPhone;
+		$user->address = $request->txtAddress;
+		$user->password = $request->txtPass;
+		$user->save();
+		
+		if (!Cookie::has('email')) {
+			$response = new Response; 
+			return redirect('index')->withCookie('email', $request['txtEmail'], 1);
+			
+		} else {
+			return redirect('login');
 		}
 	}
 	public function getLogout()
@@ -125,8 +233,13 @@ class IndexController extends Controller
 	}
 	public function getCheckout()
 	{
-
-		return view('user.checkout');
+		if (Cart::count() > 0) {
+			return view('user.checkout');
+		} else {
+			$message = 'No product in cart';
+			return redirect('cart');
+		}
+		
 	}
 	public function postCheckout(Request $request)
 	{
@@ -169,6 +282,12 @@ class IndexController extends Controller
 				$order->save();
 			}
 			Cart::destroy();
+			$data = ['name' => 'Info order','message' => 'Your buy products is success','email' => $transaction->email];
+			Mail::send('mail', $data, function ($msg) use ($transaction)
+			{
+				$msg->from('aloha4391@gmail.com', 'Info order');
+				$msg->to($transaction->email)->subject('Your order is success');
+			});
 			return redirect('success');
 		}
 		
@@ -204,6 +323,7 @@ class IndexController extends Controller
 		$contact->phone = $request->txtPhone;
 		$contact->message = $request->txtMessage;
 		$contact->save();
+		
 		return redirect('contact');
 	}
 }

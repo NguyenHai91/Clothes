@@ -15,10 +15,10 @@ ul li a,a{
 	color:#333;
 	outline:0; 
 	-webkit-transition: all 0.2s linear;
-    -moz-transition: all 0.2s linear;
-    -o-transition: all 0.2s linear;
-    -ms-transition: all 0.2s linear;
-    transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	-ms-transition: all 0.2s linear;
+	transition: all 0.2s linear;
 }
 a{
 	color:#eb4800;
@@ -153,6 +153,23 @@ iframe{
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
+}
+#top-bar .cover-text-search {
+	position: relative;
+	z-index: 100;
+	
+}
+#top-bar .search-query {
+	color: black;
+}
+#top-bar .btn {
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 102;
+	border-radius: 34px;
+
+
 }
 #top-bar .user-menu {
 	margin: 0;
@@ -292,13 +309,13 @@ section.navbar{
 	text-transform: none;
 }
 #menu > ul{
-    display: block;
-    margin-left:0;	
+	display: block;
+	margin-left:0;	
 }
 #menu > ul > li{
-    list-style: none;
-    float: left;
-    position: relative;   
+	list-style: none;
+	float: left;
+	position: relative;   
 	margin-right: 0px;
 }
 #menu > ul > li > a {
@@ -309,7 +326,7 @@ section.navbar{
 	font-weight: bold;
 	text-align: center;
 	padding: 10px 14px;
-	}
+}
 #menu > ul > li.active{
 	background-color:#eb4800;
 }
@@ -323,34 +340,34 @@ section.navbar{
 #menu .current{color: #eb4800 !important;}
 
 #menu ul ul {
-    background: none repeat scroll 0 0 #eee;
-    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
-    padding: 0px;
-    position: absolute;
-    min-width:170px;
+	background: none repeat scroll 0 0 #eee;
+	box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+	padding: 0px;
+	position: absolute;
+	min-width:170px;
 	display:none;
 }
 #menu > ul > li > ul{
-    margin-left:10px;
-    margin-top:-12px;
+	margin-left:10px;
+	margin-top:-12px;
 	border:1px solid #ddd;
 	border-top:0;
 }
 #menu ul ul li {
-    list-style: none outside none;
-    position: relative;
+	list-style: none outside none;
+	position: relative;
 	border-top:1px solid #fff;
 	border-bottom:1px solid #ddd;
 }
 #menu ul ul li:last-child{
-    border-bottom: none !important
+	border-bottom: none !important
 }
 #menu ul ul li.menu-last{border-bottom: none;}
 #menu ul ul a{
-    display: block;
-    padding:7px 10px;
-    color: #333;
-    font-size: 12px;
+	display: block;
+	padding:7px 10px;
+	color: #333;
+	font-size: 12px;
 }
 #menu ul ul a:hover,#menu > ul > li:hover > a{color: #fff;background-color:#eb4800}
 #menu ul ul a:hover{background-color:#eb4800;}
@@ -358,14 +375,14 @@ section.navbar{
 #menu li:hover {visibility: inherit;}
 #menu li:hover ul,
 #menu li.sfHover ul {
-    left: -10px;
-    top: 52px;
-    z-index: 2299;
+	left: -10px;
+	top: 52px;
+	z-index: 2299;
 }
 #menu li li:hover ul,
 #menu li li.sfHover ul {
-    left: 130px;
-    top: 0px;
+	left: 130px;
+	top: 0px;
 }
 #menu li.sfHover > a{
 	color:#eb4800;
@@ -433,10 +450,10 @@ section.navbar{
 .product-box:hover{
 	background-color:#eb4800;
 	-webkit-transition: all 0.2s linear;
-    -moz-transition: all 0.2s linear;
-    -o-transition: all 0.2s linear;
-    -ms-transition: all 0.2s linear;
-    transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	-ms-transition: all 0.2s linear;
+	transition: all 0.2s linear;
 	box-shadow: 0px 0px 5px #ccc;
 }
 .product-box:hover a{
@@ -709,7 +726,7 @@ section.our_client .row{
 .toggleMenu {
 	display:block;
 	width:100%;    
-    padding:10px 0;
+	padding:10px 0;
 	text-align:center;	
 	font-weight:bold;
 	background:url(../images/i_submenu.png) no-repeat 98% center;
@@ -725,7 +742,7 @@ section.our_client .row{
 	text-transform:none !important;
 }
 ._toggleMenu .nav > li.hover > ul {
-    display:block;
+	display:block;
 }
 
 /* Responsive

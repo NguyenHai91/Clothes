@@ -25,8 +25,12 @@
 	<div id="top-bar" class="container">
 		<div class="row">
 			<div class="span4">
-				<form method="POST" class="search_form">
-					<input type="text" class="input-block-level search-query" Placeholder="eg. T-sirt">
+				<form method="POST" class="search_form" action="products/search">
+					<input type="hidden" name="_token" value="{{csrf_token('')}}">
+					<div class="cover-text-search">
+						<input type="text" class="input-block-level search-query" Placeholder="eg. T-sirt" name="txtSearch">
+						<button class="btn" type="submit">Search</button>
+					</div>
 				</form>
 			</div>
 			<div class="span8">

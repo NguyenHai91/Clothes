@@ -28,10 +28,9 @@ class CategoryController extends Controller
 		
 		$cate = new Category;
 		$cate->name = $request->txtCateName;
-		// $cate->alias = changeTitle($request->txtCateName);
 		$cate->description = $request->txtDesc;
 		$cate->parent_id = $request->slcParent;
-		$cate->gender = $gender['gender'];
+		$cate->gender = $request->rdoGender;
 		$cate->active = $request->rdoActive;
 		$cate->save();
 		return redirect('admin/category/add')->with(['type'=>'success','message'=>'insert success !']);
@@ -60,9 +59,11 @@ class CategoryController extends Controller
 		$this->validate($request,[
 			'txtCateName' => 'required',
 			'slcParent' => 'required',
+			'rdoGender' => 'required',
 		],[
 			'txtCateName.required' => 'Cate name not empty !',
 			'slcParent.required' => 'Cate parent not empty !',
+			'rdoGender.required' => 'Gender  not empty !',
 		]);
 		$cate = Category::find($id);
 		$cate['name'] = $request['txtCateName'];
@@ -70,7 +71,7 @@ class CategoryController extends Controller
 		$cate['active'] = $request['rdoActive'];
 		$cate['parent_id'] = $request['slcParent'];
 		$gender = Category::find($request['slcParent']);
-		$cate['gender'] = $gender['gender'];
+		$cate['gender'] = $request['rdoGender'];
 		$cate->save();
 		return redirect('admin/category/list')->with(['type'=>'success','message'=>'Edit success']);
 	}

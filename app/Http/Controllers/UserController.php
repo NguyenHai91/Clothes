@@ -13,7 +13,7 @@ class UserController extends Controller
 {
 	public function getList()
 	{
-		$users = Users::all();
+		$users = User::all();
 		return view('admin.user.list',['users'=>$users]);
 	}
 	public function getAdd()

@@ -21,6 +21,7 @@
 <section class="header_text">
 	We stand for top quality templates. Our genuine developers always optimized bootstrap commercial templates. 
 	<br/>Don't miss to use our cheap abd best bootstrap templates.
+	
 </section>
 <section class="main-content">
 	<div class="row">

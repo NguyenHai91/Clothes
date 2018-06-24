@@ -14,10 +14,18 @@
 
 Route::get('/', 'IndexController@index');
 Route::get('index', 'IndexController@index');
-Route::get('category/{cate}', 'IndexController@getProductInCategory');
+Route::get('products/category/{cate}', 'IndexController@getProductInCategory');
+Route::get('products/bestseller', 'IndexController@getProductBestSeller');
+Route::get('products/men', 'IndexController@getProductMen');
+Route::get('products/women', 'IndexController@getProductWomen');
+Route::get('products/search/{txtSearch}', 'IndexController@getProductSearch');
+Route::post('products/search', 'IndexController@postProductSearch');
+
 Route::get('brand/{brandname}', 'IndexController@getProductInBrand');
 Route::get('product_detail/{id}', 'IndexController@getProductDetail');
 Route::post('product_detail/{id}', 'IndexController@postProductDetail');
+Route::get('product_detail/update/{id}/{qty}', 'IndexController@updateProductDetail');
+
 
 Route::get('cart', 'IndexController@getCart');
 Route::get('cart/delete/{rowid}', 'IndexController@deleteProductWithRowId');
@@ -25,6 +33,7 @@ Route::get('cart/update/{id}/{qty}', 'IndexController@updateCart');
 
 Route::get('login', 'IndexController@getLogin');
 Route::post('login', 'IndexController@postLogin');
+Route::post('register', 'IndexController@postRegister');
 Route::get('logout', 'IndexController@getLogout');
 
 Route::get('checkout', 'IndexController@getCheckout');
@@ -33,16 +42,23 @@ Route::get('success', 'IndexController@getSuccess');
 
 Route::get('contact', 'IndexController@getContact');
 Route::post('contact', 'IndexController@postContact');
-// Route::controllers([
-// 	'auth'=>'Auth\AuthController',
-// 	'password'=>'Auth\PasswordController'
-// ]);
-Route::group(['prefix' => 'admin'], function ()
+
+
+
+Route::controllers([
+	'auth'=>'Auth\AuthController',
+	'password'=>'Auth\PasswordController'
+]);
+
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 {
-	
-	Route::get('login', 'Auth\AuthController@getLogin');
-	Route::post('login', 'Auth\AuthController@postLogin');
-	Route::get('logout', 'Auth\AuthController@getLogout');
+	Route::auth();
+	// Route::get('login', function ()
+	// {
+	// 	return view('admin.login');
+	// });
+	// Route::post('login', 'Auth\AuthController@postLogin');
+	// Route::get('logout', 'Auth\AuthController@getLogout');
 
 	Route::group(['prefix' => 'category'], function ()
 	{
