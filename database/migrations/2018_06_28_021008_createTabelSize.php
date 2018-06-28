@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class EditUserTable extends Migration
+class CreateTabelSize extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,13 @@ class EditUserTable extends Migration
      */
     public function up()
     {
-       Schema::table('users', function (Blueprint $table) {
-        $table->tinyInteger('level');
-    });
-   }
+        Schema::create('size', function (Blueprint $table){
+          $table->engine = 'InnoDB';
+          $table->increments('id')->index();
+          $table->string('size');
+          $table->timestamps(); 
+      });
+    }
 
     /**
      * Reverse the migrations.
@@ -24,8 +27,6 @@ class EditUserTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('level');
-        });
+        Schema::drop('size');
     }
 }

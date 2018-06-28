@@ -12,27 +12,26 @@ class CreateProducts extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table)
-        {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('alias');
-            $table->float('price');
-            $table->text('intro');
-            $table->text('content');
-            $table->string('image');
-            $table->string('keywords');
-            $table->text('desciption');
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->integer('category_id')->unsigned()->nullable();
+      Schema::create('product', function (Blueprint $table)
+      {
+       $table->engine = 'InnoDB';
+       $table->increments('id')->unsigned()->index();
+       $table->string('name');
+       $table->text('description');
+       $table->float('price');
+       $table->text('preview');
+       $table->string('brand');
+       $table->string('image');
+       $table->integer('category_id')->unsigned()->index();
+       $table->integer('quantity');
+       $table->integer('number_order');
+       $table->integer('view');
+       $table->integer('discount');
+       $table->integer('active');
+       $table->integer('gender');
+       $table->timestamps();
+     });
 
-            $table->timestamps();
-        });
-        Schema::table('products', function (Blueprint $table)
-        {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade');
-        });
     }
 
     /**
@@ -42,6 +41,6 @@ class CreateProducts extends Migration
      */
     public function down()
     {
-        Schema::drop('products');
+      Schema::drop('products');
     }
-}
+  }

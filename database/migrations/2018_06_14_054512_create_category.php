@@ -13,17 +13,17 @@ class CreateCategory extends Migration
      */
     public function up()
     {
-        Schema::create('category', function (Blueprint $table)
-        {
-            $table->engine = 'InnoDB';
-            $table->increments('id')->unsigned();
-            $table->string('name');
-            $table->string('alias');
-            $table->integer('order');
-            $table->integer('parent_id');
-            $table->string('keywords');
+    	Schema::create('category', function (Blueprint $table)
+    	{
+    		$table->engine = 'InnoDB';
+    		$table->increments('id')->index();
+    		$table->string('name');
+    		$table->string('description');
+    		$table->integer('parent_id')->unsigned()->index();
+    		$table->integer('gender');
+    		$table->integer('active');
 
-        });
+    	});
     }
 
     /**
@@ -33,6 +33,6 @@ class CreateCategory extends Migration
      */
     public function down()
     {
-        Schema::drop('category');
+    	Schema::drop('category');
     }
 }

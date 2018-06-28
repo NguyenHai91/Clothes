@@ -15,9 +15,15 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->string('name');
+            $table->string('username');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('fullname');
+            $table->integer('phone');
+            $table->string('address');
+            $table->integer('level');
+            $table->string('avatar');
+            $table->integer('active');
             $table->rememberToken();
             $table->timestamps();
         });

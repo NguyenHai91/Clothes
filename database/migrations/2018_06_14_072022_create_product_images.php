@@ -12,16 +12,14 @@ class CreateProductImages extends Migration
      */
     public function up()
     {
-       Schema::create('product_images', function (Blueprint $table){
-           $table->increments('id');
-           $table->string('image');
-           $table->integer('product_id')->unsigned()->nullable();
-           $table->timestamps(); 
-       });
-       Schema::table('product_images', function (Blueprint $table)
-       {
-        $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+     Schema::create('product_images', function (Blueprint $table){
+      $table->engine = 'InnoDB';
+      $table->increments('id')->unsigned()->index();
+      $table->string('image');
+      $table->integer('product_id')->unsigned()->index();
+      $table->timestamps(); 
     });
+     
    }
 
     /**
@@ -31,6 +29,6 @@ class CreateProductImages extends Migration
      */
     public function down()
     {
-        Schema::drop('product_images');
+      Schema::drop('product_images');
     }
-}
+  }
