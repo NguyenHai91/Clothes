@@ -34,7 +34,7 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "php -r \"copy('.env.example', '.env');\""
+            "php -r \"file_exists(\'.env\') || copy(\'.env.example\', \'.env\');\""
         ],
         "post-create-project-cmd": [
             "php artisan key:generate"
@@ -43,12 +43,14 @@
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
             "php artisan optimize",
             "php artisan clear-compiled",
-            "php artisan optimize",
-            "chmod -R 777 public/"
+            "chmod -R 777 public/",
+            "@deploy"
+
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
+            "php artisan optimize",
+            "@deploy"
         ]
     },
     "config": {
