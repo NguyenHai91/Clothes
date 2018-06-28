@@ -14,15 +14,15 @@ class CreateTabelContact extends Migration
     {
       Schema::create('contact', function (Blueprint $table){
         $table->engine = 'InnoDB';
-        $table->increments('id')->index();
+        $table->increments('id')->unsigned()->index();
         $table->string('name');
         $table->string('email');
         $table->integer('phone');
         $table->string('title');
         $table->text('message');
         $table->timestamps(); 
-      });
-    }
+    });
+  }
 
     /**
      * Reverse the migrations.
@@ -32,5 +32,5 @@ class CreateTabelContact extends Migration
     public function down()
     {
       Schema::drop('contact');
-    }
   }
+}

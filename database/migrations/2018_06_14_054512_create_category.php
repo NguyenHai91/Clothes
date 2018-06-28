@@ -16,7 +16,7 @@ class CreateCategory extends Migration
     	Schema::create('category', function (Blueprint $table)
     	{
     		$table->engine = 'InnoDB';
-    		$table->increments('id')->index();
+    		$table->increments('id')->unsigned()->index();
     		$table->string('name');
     		$table->string('description');
     		$table->integer('parent_id')->unsigned()->index();

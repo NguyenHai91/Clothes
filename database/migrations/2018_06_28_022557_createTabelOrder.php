@@ -14,7 +14,7 @@ class CreateTabelOrder extends Migration
     {
       Schema::create('order', function (Blueprint $table){
         $table->engine = 'InnoDB';
-        $table->increments('id')->index();
+        $table->increments('id')->unsigned()->index();
         $table->integer('transaction_id')->unsigned()->index();
         $table->integer('product_id')->unsigned()->index();
         $table->integer('quantity');
@@ -23,8 +23,8 @@ class CreateTabelOrder extends Migration
         $table->double('amount');
         $table->text('note');
         $table->timestamps(); 
-      });
-    }
+    });
+  }
 
     /**
      * Reverse the migrations.
@@ -34,5 +34,5 @@ class CreateTabelOrder extends Migration
     public function down()
     {
       Schema::drop('order');
-    }
   }
+}

@@ -12,11 +12,11 @@ class CreateTabelSize extends Migration
      */
     public function up()
     {
-        Schema::create('size', function (Blueprint $table){
-          $table->engine = 'InnoDB';
-          $table->increments('id')->index();
-          $table->string('size');
-          $table->timestamps(); 
+      Schema::create('size', function (Blueprint $table){
+        $table->engine = 'InnoDB';
+        $table->increments('id')->unsigned()->index();
+        $table->string('size');
+        $table->timestamps(); 
       });
     }
 
@@ -27,6 +27,6 @@ class CreateTabelSize extends Migration
      */
     public function down()
     {
-        Schema::drop('size');
+      Schema::drop('size');
     }
-}
+  }

@@ -12,14 +12,14 @@ class CreateTabelSale extends Migration
      */
     public function up()
     {
-        Schema::create('sale', function (Blueprint $table){
-          $table->engine = 'InnoDB';
-          $table->increments('id')->index();
-          $table->string('name');
-          $table->integer('discount');
-          $table->dateTime('start_date');
-          $table->dateTime('end_date');
-          $table->timestamps(); 
+      Schema::create('sale', function (Blueprint $table){
+        $table->engine = 'InnoDB';
+        $table->increments('id')->unsigned()->index();
+        $table->string('name');
+        $table->integer('discount');
+        $table->dateTime('start_date');
+        $table->dateTime('end_date');
+        $table->timestamps(); 
       });
     }
 
@@ -30,6 +30,6 @@ class CreateTabelSale extends Migration
      */
     public function down()
     {
-        Schema::drop('sale');
+      Schema::drop('sale');
     }
-}
+  }

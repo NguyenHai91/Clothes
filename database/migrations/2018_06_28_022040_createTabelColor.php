@@ -14,12 +14,12 @@ class CreateTabelColor extends Migration
     {
       Schema::create('color', function (Blueprint $table){
         $table->engine = 'InnoDB';
-        $table->increments('id')->index();
+        $table->increments('id')->unsigned()->index();
         $table->string('name');
         $table->string('code_color');
         $table->timestamps(); 
-      });
-    }
+    });
+  }
 
     /**
      * Reverse the migrations.
@@ -29,5 +29,5 @@ class CreateTabelColor extends Migration
     public function down()
     {
       Schema::drop('color');
-    }
   }
+}

@@ -12,21 +12,21 @@ class CreateTableTransaction extends Migration
      */
     public function up()
     {
-        Schema::create('transaction', function (Blueprint $table){
-          $table->engine = 'InnoDB';
-          $table->increments('id')->index();
-          $table->integer('status');
-          $table->integer('user_id')->index()->nullable();
-          $table->string('username');
-          $table->string('email');
-          $table->integer('phone');
-          $table->string('address');
-          $table->double('amount');
-          $table->string('payment');
-          $table->string('payment_info');
-          $table->text('message');
-          $table->string('security');
-          $table->timestamps(); 
+      Schema::create('transaction', function (Blueprint $table){
+        $table->engine = 'InnoDB';
+        $table->increments('id')->unsigned()->index();
+        $table->integer('status');
+        $table->integer('user_id')->index()->nullable();
+        $table->string('username');
+        $table->string('email');
+        $table->integer('phone');
+        $table->string('address');
+        $table->double('amount');
+        $table->string('payment');
+        $table->string('payment_info');
+        $table->text('message');
+        $table->string('security');
+        $table->timestamps(); 
       });
     }
 
@@ -37,6 +37,6 @@ class CreateTableTransaction extends Migration
      */
     public function down()
     {
-        Schema::drop('transaction');
+      Schema::drop('transaction');
     }
-}
+  }
