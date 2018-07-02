@@ -16,9 +16,8 @@ class CreateTabelSize extends Migration
         $table->engine = 'InnoDB';
         $table->increments('id')->unsigned()->index();
         $table->string('size');
-        $table->timestamps(); 
-      });
-    }
+    });
+  }
 
     /**
      * Reverse the migrations.
@@ -28,5 +27,5 @@ class CreateTabelSize extends Migration
     public function down()
     {
       Schema::drop('size');
-    }
   }
+}

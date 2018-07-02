@@ -23,7 +23,6 @@ class CreateProducts extends Migration
        $table->string('brand');
        $table->string('image');
        $table->integer('category_id')->unsigned()->index();
-       $table->integer('quantity');
        $table->integer('number_order');
        $table->integer('view');
        $table->integer('discount');

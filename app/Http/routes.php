@@ -24,7 +24,7 @@ Route::post('products/search', 'IndexController@postProductSearch');
 Route::get('brand/{brandname}', 'IndexController@getProductInBrand');
 Route::get('product_detail/{id}', 'IndexController@getProductDetail');
 Route::post('product_detail/{id}', 'IndexController@postProductDetail');
-Route::get('product_detail/update/{id}/{qty}', 'IndexController@updateProductDetail');
+Route::get('product_detail/update/{id}', 'IndexController@updateProductDetail');
 
 
 Route::get('cart', 'IndexController@getCart');
@@ -59,6 +59,20 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 	// });
 	// Route::post('login', 'Auth\AuthController@postLogin');
 	// Route::get('logout', 'Auth\AuthController@getLogout');
+	Route::group(['prefix' => 'detail'], function ()
+	{
+		Route::get('add/{id}','ProductDetailController@getAdd');
+		Route::post('add/{id}','ProductDetailController@postAdd');
+		Route::get('edit/{id}','ProductDetailController@getEdit');
+		Route::post('edit/{id}','ProductDetailController@postEdit');
+	});
+
+	Route::group(['prefix' => 'size'], function ()
+	{
+		Route::get('list', 'SizeController@getList');
+		Route::get('add', 'SizeController@getAdd');
+		Route::post('add', 'SizeController@postAdd');
+	});
 
 	Route::group(['prefix' => 'category'], function ()
 	{

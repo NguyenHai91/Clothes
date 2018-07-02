@@ -17,7 +17,6 @@ class CreateTabelColor extends Migration
         $table->increments('id')->unsigned()->index();
         $table->string('name');
         $table->string('code_color');
-        $table->timestamps(); 
     });
   }
 

@@ -1,6 +1,6 @@
 @extends('user.layout.page')
-
 @section('content')
+
 <section  class="homepage-slider" id="home-slider">
 	<div class="flexslider">
 		<ul class="slides">
@@ -48,36 +48,39 @@
 							$i++;
 						}
 						?>
-
 						<div class="carousel-inner">
 							<div class="active item">
 								<ul class="thumbnails">
+									@if(isset($list1))
 									@foreach($list1 as $item)						
 									<li class="span3">
 										<div class="product-box">
 											<span class="sale_tag"></span>
 											<p><a href="product_detail/{{$item['id']}}"><img src="upload/{{$item['image']}}" alt="" /></a></p>
 											<a href="product_detail/{{$item['id']}}" class="title">{{$item['name']}}</a><br/>
-											<a href="products.html" class="category">Commodo consequat</a>
+											<a href="product_detail/{{$item['id']}}" class="category">{{$item['brand']}}</a>
 											<p class="price">${{$item['price']}}</p>
 										</div>
 									</li>
 									@endforeach
+									@endif
 								</ul>
 							</div>
 
 							<div class="item">
 								<ul class="thumbnails">
+									@if(isset($list2))
 									@foreach($list2 as $item)
 									<li class="span3">
 										<div class="product-box">
 											<p><a href="product_detail/{{$item['id']}}"><img src="upload/{{$item['image']}}" alt="" /></a></p>
 											<a href="product_detail/{{$item['id']}}" class="title">{{$item['name']}}</a><br/>
-											<a href="products.html" class="category">Quis nostrud</a>
+											<a href="product_detail/{{$item['id']}}" class="category">{{$item['brand']}}</a>
 											<p class="price">${{$item['price']}}</p>
 										</div>
 									</li>
 									@endforeach
+									@endif
 								</ul>
 							</div>
 						</div>	
@@ -109,32 +112,37 @@
 							}
 							?>
 							<div class="active item">
-								<ul class="thumbnails">					@foreach($listLatest1 as $item)				
+								<ul class="thumbnails">
+									@if(isset($listLatest1))				
+									@foreach($listLatest1 as $item)				
 									<li class="span3">
 										<div class="product-box">
 											<span class="sale_tag"></span>
 											<p><a href="product_detail/{{$item['id']}}"><img src="upload/{{$item['image']}}" alt="" /></a></p>
 											<a href="product_detail/{{$item['id']}}" class="title">{{$item['name']}}</a><br/>
-											<a href="products.html" class="category">Commodo consequat</a>
+											<a href="product_detail/{{$item['id']}}" class="category">brand/{{$item['brand']}}</a>
 											<p class="price">${{$item['price']}}</p>
 										</div>
 									</li>
 									@endforeach
+									@endif
 								</ul>
 							</div>
 
 							<div class="item">
 								<ul class="thumbnails">
+									@if(isset($listLatest2))
 									@foreach($listLatest2 as $item)
 									<li class="span3">
 										<div class="product-box">
 											<p><a href="product_detail/{{$item['id']}}"><img src="upload/{{$item['image']}}" alt="" /></a></p>
 											<a href="product_detail/{{$item['id']}}" class="title">{{$item['name']}}</a><br/>
-											<a href="products.html" class="category">Quis nostrud</a>
+											<a href="product_detail/{{$item['id']}}" class="category">{{$item['brand']}}</a>
 											<p class="price">${{$item['price']}}</p>
 										</div>
 									</li>
 									@endforeach
+									@endif
 								</ul>
 							</div>
 
@@ -211,8 +219,8 @@
 				animationSpeed: 600,
 				controlNav: false,
 				directionNav: true,
-						controlsContainer: ".flex-container" // the container that holds the flexslider
-					});
+				controlsContainer: ".flex-container" 
+			});
 		});
 	});
 </script>

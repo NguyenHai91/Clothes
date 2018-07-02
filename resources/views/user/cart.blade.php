@@ -8,7 +8,12 @@
 	<div class="row">
 		<div class="span9">					
 			<h4 class="title"><span class="text"><strong>Your</strong> Cart</span></h4>
-			@include('admin.logs.error')
+			@if(isset($error))
+			<div class="alert alert-danger">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				<strong>Title!</strong> <span class="message">{{$error}}</span>
+			</div>
+			@endif
 			<div class="cart-alert alert alert-danger " style="display: none">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 				<strong>Title!</strong> <span class="message"></span>
@@ -21,24 +26,28 @@
 						<th>Remove</th>
 						<th>Image</th>
 						<th>Product Name</th>
+						<th>Size</th>
+						<th>Color</th>
 						<th>Quantity</th>
 						<th>Unit Price</th>
 						<th>Total</th>
 					</tr>
 				</thead>
 				<tbody>
-					@if(count($productInCart) == 0)
+					@if(!isset($productInCart))
 					<div class="alert alert-info">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 						<strong>Title!</strong> No product in cart
 					</div>
 					@else 
 					@foreach($productInCart as $item)
-					<?php $pr = DB::table('product')->where('id',$item->id)->first() ?>
+					
 					<tr>
 						<td><a href="cart/delete/{{$item->rowId}}">Delete</a></td>
-						<td><a href="product_detail/{{$item->id}}"><img alt="" src="upload/{{$pr->image}}"></a></td>
+						<td><a ><img alt="" src="upload/{{$item->options['image']}}"></a></td>
 						<td>{{$item->name}}</td>
+						<td class="totalPrice" >{{$item->options['size']}}</td>
+						<td class="totalPrice" >{{$item->options['color']}}</td>
 						<td><input type="text" placeholder="1" class="input-mini txtQuant" value="{{$item->qty}}" data="{{$item->rowId}}"></td>
 						<td>${{$item->price}}</td>
 						<td class="totalPrice" >${{(float)$item->price * (int)$item->qty}}</td>
@@ -51,9 +60,11 @@
 			
 			<hr>
 			<p class="cart-total right">
+				@if(isset($subtotal)&& isset($tax) && isset($total))
 				<strong>Sub-Total</strong>:	${{$subtotal}}<br>
 				<strong>VAT (21.0%)</strong>: ${{$tax}}<br>
 				<strong>Total</strong>: ${{$total}}<br>
+				@endif
 			</p>
 			<hr/>
 			<p class="buttons center">				
@@ -77,11 +88,11 @@
 		$('#checkout').click(function (e) {
 			document.location.href = "checkout";
 		});
+
 		$('input.txtQuant').blur(function (e) {
-			
+			var txtQuant = $(this);
 			var id = $(this).attr('data');
 			var qty = $(this).val();
-			
 			var totalPrice = $(this).parent().find('td.totalPrice');
 			var cartAlert = $('div.cart-alert');
 			var msg = cartAlert.find('span.message');
@@ -92,12 +103,12 @@
 				'data':{'id':id, 'qty':qty},
 				success: function(response) {
 					cartAlert.css('display','none');
-					$('input.txtQuant').css('border','');
+					txtQuant.css('border','');
 					if (response['status'] == 'error') {
 						cartAlert.css('display','block');
 						msg.text(response['error']);
-						$('input.txtQuant').val('1');
-						$('input.txtQuant').css('border','1px solid red');
+						txtQuant.val('1');
+						txtQuant.css('border','1px solid red');
 					}
 				}
 			});

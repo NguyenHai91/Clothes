@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTabelProductColor extends Migration
+class CreateTableProductDetail extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,14 @@ class CreateTabelProductColor extends Migration
      */
     public function up()
     {
-        Schema::create('product_color', function (Blueprint $table){
+        Schema::create('product_detail', function (Blueprint $table)
+        {
             $table->engine = 'InnoDB';
-            $table->integer('color_id')->unsigned()->index();
+            $table->increments('id')->unsigned()->index();
             $table->integer('product_id')->unsigned()->index();
-            $table->timestamps(); 
+            $table->integer('size_id')->unsigned()->index();
+            $table->integer('color_id')->unsigned()->index();
+            $table->integer('quantity')->unsigned();
         });
     }
 
@@ -27,6 +30,6 @@ class CreateTabelProductColor extends Migration
      */
     public function down()
     {
-        Schema::drop('product_color');
+        Schema::drop('product_detail');
     }
 }

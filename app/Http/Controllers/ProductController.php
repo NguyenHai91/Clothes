@@ -10,6 +10,9 @@ use App\Product;
 use App\ProductImages;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Input;
+use App\Size;
+use App\ProductSize;
+use App\ProductColor;
 
 
 class ProductController extends Controller
@@ -22,7 +25,8 @@ class ProductController extends Controller
 	public function getAdd()
 	{
 		$cate = Category::all();
-		return view('admin.product.add',['cate'=>$cate]);
+		$size = Size::all();
+		return view('admin.product.add', compact('cate', 'size'));
 	}
 	public function postAdd(ProductRequest $request)
 	{
@@ -35,16 +39,14 @@ class ProductController extends Controller
 		$product['price'] = $request['txtPrice'];
 		$product['preview'] = $request['txtPreview'];
 		$product['description'] = $request['txtDesc'];
-		$product['quantity'] = $request['txtQuant'];
-		//$product['number_order'] = 0;
 		$product['brand'] = $request['txtBrand'];
-		//$product['view'] = 0;
 		$product['active'] = $request['rdoActive'];
 		$product['image'] = $fileName;
 		
 		$request->file('fImages')->move('upload/',$fileName);
 		$product->save();
 		$id = $product['id'];
+
 		for ($i = 1; $i <= 5; $i++) {
 			$img = $request->file('chImage'.$i);
 			if (isset($img)) {
@@ -55,7 +57,7 @@ class ProductController extends Controller
 				$product_img->save();
 			}
 		}
-		return redirect('admin/product/add')->with(['type'=>'success','message'=>'add product success']);
+		return redirect('admin/detail/add/'.$product->id)->with(['type'=>'success','message'=>'add product success']);
 	}
 	public function getDelete($id)
 	{

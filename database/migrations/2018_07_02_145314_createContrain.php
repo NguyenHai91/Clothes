@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContrains extends Migration
+class CreateContrain extends Migration
 {
     /**
      * Run the migrations.
@@ -17,23 +17,17 @@ class CreateContrains extends Migration
             $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade')->onUpdate('cascade');
 
         });
+        Schema::table('product_detail', function (Blueprint $table)
+        {
+            $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('size_id')->references('id')->on('size')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('color_id')->references('id')->on('color')->onDelete('cascade')->onUpdate('cascade');
+
+        });
         Schema::table('order', function (Blueprint $table)
         {
             $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade')->onUpdate('cascade');
         });
-        Schema::table('product_size', function (Blueprint $table)
-        {
-            $table->foreign('size_id')->references('id')->on('size')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade')->onUpdate('cascade');
-        });
-        
-        Schema::table('product_color', function (Blueprint $table)
-        {
-            $table->foreign('color_id')->references('id')->on('color')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade')->onUpdate('cascade');
-        });
-
-
 
         Schema::table('category', function (Blueprint $table)
         {
@@ -44,8 +38,6 @@ class CreateContrains extends Migration
 
             $table->foreign('id')->references('transaction_id')->on('order')->onDelete('cascade')->onUpdate('cascade');
         });
-
-
     }
 
     /**
@@ -55,6 +47,6 @@ class CreateContrains extends Migration
      */
     public function down()
     {
-
+        //
     }
 }

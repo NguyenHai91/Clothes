@@ -14,7 +14,7 @@
 					<ul class="thumbnails small">
 						@foreach($product->productImages as $item)	
 						<li class="span1">
-							<a href="themes/images/ladies/2.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 2"><img src="upload/{{$item['image']}}" alt=""></a>
+							<a href="upload/{{$item['image']}}" class="thumbnail" data-fancybox-group="group1" title="Description 2"><img src="upload/{{$item['image']}}" alt=""></a>
 						</li>								
 						@endforeach
 					</ul>
@@ -24,7 +24,6 @@
 						<strong>Brand:</strong> <span>{{$product->brand}}</span><br>
 						<strong>Product Code:</strong> <span>Product 14</span><br>
 						<strong>Reward Points:</strong> <span>0</span><br>
-						<strong>Availability:</strong> <span>{{$product['quantity']}}</span><br>								
 					</address>									
 					<h4><strong>Price: ${{$product['price']}}</strong></h4>
 				</div>
@@ -32,8 +31,24 @@
 					<form action="" class="form-inline" method="post">
 						<input type="hidden" name="_token" value="{{csrf_token('')}}">
 						<p>&nbsp;</p>
-						<label>Qty:</label>
-						<input class="span1 quantity" type="text" value="1" name="txtQuant" data="{{$product->id}}">
+						<label>Qty:
+							<input id="txtQuant" class="span1 quantity" type="text" value="1" name="txtQuant" data="{{$product->id}}">
+						</label>
+						<label>Size:
+							<select id="slcSize" class="span1" name="slcSize">
+								@foreach($listSize as $size)
+								<option value="{{$size->id}}">{{$size->size}}</option>
+								@endforeach
+							</select>
+						</label>
+						<label>Color:
+							<select id="slcColor" class="span1" name="slcColor">
+								@foreach($listColor as $color)
+								<option value="{{$color->id}}">{{$color->name}}</option>
+								@endforeach
+							</select>
+							<input class="span1" type="color" name="iptColor" value="{{$color->code_color}}" disabled>
+						</label>
 						<button class="btn btn-inverse" type="submit">Add to cart</button>
 						<div class="detail-alert alert alert-danger " style="display: none">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -150,7 +165,7 @@
 			</div>
 		</div>
 		<div class="span3 col">
-			
+
 			@include('user.layout.random_block')
 			@include('user.layout.bestseller_block')
 		</div>
@@ -178,20 +193,23 @@
 		$('#myCarousel-2').carousel({
 			interval: 2500
 		});
-		$('input.quantity').blur(function (e) {
-			$qty = $(this).val();
-			$id = $(this).attr('data');
+		// add event for quantity 
+		$('#txtQuant').blur(function (e) {
+			$qty = $('#txtQuant').val();
+			$id = $('#txtQuant').attr('data');
+			$sizeId = $('#slcSize').val();
+			$colorId = $('#slcColor').val();
 			$alert = $('div.detail-alert');
 			$msg = $alert.find('span.message');
 			$.ajax({
 				'type': 'GET',
-				'url': 'product_detail/update/'+$id+ '/'+ $qty,
+				'url': 'product_detail/update/' + $id,
 				'cache': false,
-				'data':{'id':$id, 'qty':$qty},
+				'data': {'id':$id, 'qty':$qty, 'sizeId':$sizeId, 'colorId':$colorId},
 				success: function (response) {
 					$alert.css('display','none');
 					if (response['status'] == 'error') {
-						$('input.quantity').val('1');
+						$('#txtQuant').val(response['maxQty']);
 						$alert.css('display','block');
 						$msg.text(response['error']);
 
@@ -199,7 +217,57 @@
 				}
 
 			});
-		});								
+		});	
+		// add event for size select
+		$('#slcSize').change(function (e) {
+			$qty = $('#txtQuant').val();
+			$id = $('#txtQuant').attr('data');
+			$sizeId = $('#slcSize').val();
+			$colorId = $('#slcColor').val();
+			$alert = $('div.detail-alert');
+			$msg = $alert.find('span.message');
+			$.ajax({
+				'type': 'GET',
+				'url': 'product_detail/update/' + $id,
+				'cache': false,
+				'data': {'id':$id, 'qty':$qty, 'sizeId':$sizeId, 'colorId':$colorId},
+				success: function (response) {
+					$alert.css('display','none');
+					if (response['status'] == 'error') {
+						$('#txtQuant').val(response['maxQty']);
+						$alert.css('display','block');
+						$msg.text(response['error']);
+
+					}
+				}
+
+			});
+		});
+		// add event for color select
+		$('#slcColor').change(function (e) {
+			$qty = $('#txtQuant').val();
+			$id = $('#txtQuant').attr('data');
+			$sizeId = $('#slcSize').val();
+			$colorId = $('#slcColor').val();
+			$alert = $('div.detail-alert');
+			$msg = $alert.find('span.message');
+			$.ajax({
+				'type': 'GET',
+				'url': 'product_detail/update/' + $id,
+				'cache': false,
+				'data': {'id':$id, 'qty':$qty, 'sizeId':$sizeId, 'colorId':$colorId},
+				success: function (response) {
+					$alert.css('display','none');
+					if (response['status'] == 'error') {
+						$('#txtQuant').val(response['maxQty']);
+						$alert.css('display','block');
+						$msg.text(response['error']);
+
+					}
+				}
+
+			});
+		});										
 	});
 </script>
 @endsection

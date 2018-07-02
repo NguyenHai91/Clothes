@@ -32,10 +32,7 @@
             <label>Brand</label>
             <input class="form-control" name="txtBrand" placeholder="Please Enter Password" value="{!! old('txtBrand'),isset($product) ? $product['brand'] : null !!}" />
         </div>
-        <div class="form-group">
-            <label>Quantity</label>
-            <input class="form-control" name="txtQuant" placeholder="Please Enter Password" value="{!! old('txtQuant'),isset($product) ? $product['quantity'] : null !!}" />
-        </div>
+
         <div class="form-group">
             <label>Number Order</label>
             <input class="form-control" name="txtNumOrder" placeholder="Please Enter Password" value="{!! old('txtNumOrder'),isset($product) ? $product['number_order'] : null !!}" />

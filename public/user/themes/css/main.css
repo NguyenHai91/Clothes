@@ -793,3 +793,7 @@ section.our_client .row{
 		border-bottom:1px solid #eee;
 	}
 }
+
+.table-striped tr td img {
+	width: 100px;
+}

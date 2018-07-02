@@ -120,6 +120,18 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        <li>
+                            <a href="admin/user/list"><i class="fa fa-users fa-fw"></i> Size<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="admin/size/list">List Size</a>
+                                </li>
+                                <li>
+                                    <a href="admin/size/add">Add Size</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

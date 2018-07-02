@@ -17,6 +17,11 @@ use App\Transaction;
 use App\Order;
 use App\Contact;
 use App\User;
+use App\Size;
+use App\Color;
+use App\ProductSize;
+use App\ProductColor;
+use App\ProductDetail;
 use Mail;
 
 class IndexController extends Controller
@@ -30,7 +35,11 @@ class IndexController extends Controller
 		$cate = Category::all();
 		$sportCates = Category::where('parent_id','=',39)->orWhere('parent_id','=',40)->get();
 		$accessoryCates = Category::where('parent_id','=',41)->orWhere('parent_id','=',42)->get();
-		$randProducts = Product::all()->random()->take(10)->get();
+		$randProducts = null;
+		if (count(Product::all()) > 0) {
+			$randProducts = Product::all()->random()->take(10)->get();
+		}
+		
 		$bestSeller = Product::select('*')->orderBy('number_order','desc')->take(3)->get();
 		$brand = Product::select('brand')->distinct()->get();
 
@@ -47,7 +56,6 @@ class IndexController extends Controller
 		$latestProducts = Product::select('*')->orderBy('created_at','DESC')->take(8)->get()->toArray();
 		$email = $request->cookie('email');
 		return view('user.index',compact('featureProducts', 'latestProducts', 'email'));
-		
 	}
 	public function getProductSearch($txtSearch)
 	{
@@ -97,41 +105,62 @@ class IndexController extends Controller
 	public function getProductDetail($id)
 	{
 
-		$product = Product::find($id);
+		$product = Product::findOrFail($id);
+		$listSize = Size::select('size.size', 'size.id')->distinct()->join('product_detail','product_detail.size_id','=','size.id')->join('color','color.id','=','product_detail.color_id')->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
+		$listColor = Size::select('color.name', 'color.id')->distinct()->join('product_detail','product_detail.size_id','=','size.id')->join('color','color.id','=','product_detail.color_id')->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
+		
 		Product::where('id',$id)->increment('view');
-		$relateProduct = Product::where('category_id','=',$product['category_id'])->orderBy('created_at','desc')->take(9)->get();
-		return view('user.product_detail', compact('product','relateProduct'));
+		$relateProduct = Product::where('category_id',$product['category_id'])->orderBy('created_at','desc')->take(9)->get();
+		return view('user.product_detail', compact('product','relateProduct','listSize','listColor'));
 	}
 	public function postProductDetail($id, Request $request)
 	{
 		
-		$productBuy = Product::find($id);
+		
+		$size = Size::findOrFail($request->slcSize);
+		$color = Color::findOrFail($request->slcColor);
+		$productDetail = ProductDetail::where('product_id',$id)->where('size_id',$request->slcSize)->where('color_id',$request->slcColor)->get()->first();
+		$productBuy = Product::find($productDetail['product_id']);
 
-		Cart::add(['id'=>$id, 'name'=>$productBuy['name'],'qty'=>$request['txtQuant'],'price'=>$productBuy['price'],'options'=>['image'=>$productBuy['image']]]);
+		Cart::add(['id'=>$productDetail['id'], 'name'=>$productBuy['name'],'qty'=>$request['txtQuant'],'price'=>$productBuy['price'],'options'=>['image'=>$productBuy['image'], 'size' => $size['size'], 'color'=>$color['name']]]);
 		$productInCart = Cart::content();
 		return redirect('cart');
 	}
-	public function updateProductDetail($id, $qty)
+	public function updateProductDetail($id)
 	{
-		
-		$product = Product::find($id);
-		
-		if ($product->quantity < $qty) {
-			$maxQty = $product->quantity;
+		$qty = $_GET['qty'];
+		$sizeId = $_GET['sizeId'];
+		$colorId = $_GET['colorId'];
+		$productDetail = ProductDetail::select('*')->where('product_id',$id)->where('size_id',$sizeId)->where('color_id',$colorId)->get()->first();
+		if ($productDetail->quantity < $qty) {
+			$maxQty = $productDetail->quantity;
 			$error = "Quantity not enough, only ". $maxQty ." items in store !";
-			$data = ['status' => 'error','error' => $error];
+			$data = ['status' => 'error','error' => $error, 'maxQty' => $maxQty];
 			return $data;
 		}
 		
+		
+
 	}
 	public function getCart()
 	{
-		$randProducts = Product::all()->random()->take(10)->get();
+		$randProducts = null;
+		if (count(Product::all())>0) {
+			$randProducts = Product::all()->random()->take(10)->get();
+		}
 		$brand = Product::select('brand')->distinct()->get();
 		$productInCart = Cart::content();
 		$total = Cart::total();
 		$subtotal = Cart::subtotal();
 		$tax = Cart::tax();
+		foreach ($productInCart as $item) {
+			$detail = ProductDetail::findOrFail($item->id);
+			$quantity = $detail->quantity;
+			if ($item->qty > $quantity) {
+				$error = 'quantity not enough';
+				return view('user.cart', compact('productInCart','total','subtotal','tax','error'));
+			}
+		}
 		return view('user.cart', compact('productInCart','total','subtotal','tax'));
 	}
 
@@ -144,7 +173,7 @@ class IndexController extends Controller
 	{
 		$item = Cart::get($rowId);
 		$id = $item->id;
-		$product = Product::find($id);
+		$product = ProductDetail::findOrFail($id);
 		$maxQty = $product->quantity;
 		if ($product->quantity >= $qty) {
 			Cart::update($rowId, $qty);
@@ -186,7 +215,7 @@ class IndexController extends Controller
 				return redirect('index')->withCookie('email', $request['txtEmail'], 1);
 			}
 		} else {
-			return redirect('/');
+			return redirect('index');
 		}
 	}
 	public function postRegister(Request $request)
@@ -271,6 +300,7 @@ class IndexController extends Controller
 			$transaction->save();
 			$itemInCart = Cart::content();
 			foreach ($itemInCart as $item) {
+				ProductDetail::where('id',$item->id)->decrement('quantity',$item->qty);
 				$order = new Order;
 				$order->transaction_id = $transaction->id;
 				$order->product_id = $item->id;

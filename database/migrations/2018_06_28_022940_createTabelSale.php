@@ -18,10 +18,9 @@ class CreateTabelSale extends Migration
         $table->string('name');
         $table->integer('discount');
         $table->dateTime('start_date');
-        $table->dateTime('end_date');
-        $table->timestamps(); 
-      });
-    }
+        $table->dateTime('end_date');        
+    });
+  }
 
     /**
      * Reverse the migrations.
@@ -31,5 +30,5 @@ class CreateTabelSale extends Migration
     public function down()
     {
       Schema::drop('sale');
-    }
   }
+}

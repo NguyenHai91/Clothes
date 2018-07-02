@@ -16,10 +16,12 @@
                 @endforeach
             </select>
         </div>
+        
         <div class="form-group">
             <label>Name</label>
             <input class="form-control" name="txtName" placeholder="Please enter name product" value="{{old('txtName')}}" />
         </div>
+        
         <div class="form-group">
             <label>Price</label>
             <input class="form-control" name="txtPrice" placeholder="Please enter price"  value="{{old('txtPrice')}}"/>
@@ -35,12 +37,7 @@
         <div class="form-group">
             <label>Product Description</label>
             <textarea class="form-control" rows="3" name="txtDesc" value="{{old('txtDesc')}}"></textarea>
-        </div>
-        <div class="form-group">
-            <label>Quantity</label>
-            <input class="form-control" name="txtQuant" placeholder="Please enter category keywords" value="{{old('txtQuant')}}" />
-        </div>
-        
+        </div>   
         
         <div class="form-group">
             <label>Active</label>
