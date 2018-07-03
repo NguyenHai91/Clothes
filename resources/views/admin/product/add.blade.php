@@ -6,7 +6,7 @@
 <div class="col-lg-7" style="padding-bottom:120px">
     @include('admin.logs.error')
     <form action="admin/product/add" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="_token" value="{{csrf_token('')}}">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="form-group">
             <label>Category</label>
             <select class="form-control" name="slcCategory">
