@@ -135,7 +135,7 @@ return [
     |
     */
 
-    'domain' => env('COOKIE_DOMAIN', 'webshopping.herokuapp.com'),
+    'domain' => null,
 
     /*
     |--------------------------------------------------------------------------
