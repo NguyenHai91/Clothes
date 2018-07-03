@@ -44,6 +44,7 @@ class ProductController extends Controller
 		$product['image'] = $fileName;
 		$product['number_order'] = 0;
 		$product['view'] = 0;
+		$product['discount'] = 0;
 		
 		$request->file('fImages')->move('upload/',$fileName);
 		$product->save();
