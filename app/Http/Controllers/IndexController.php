@@ -104,7 +104,6 @@ class IndexController extends Controller
 	}
 	public function getProductDetail($id)
 	{
-
 		$product = Product::findOrFail($id);
 		$listSize = Size::select('size.size', 'size.id')->distinct()->join('product_detail','product_detail.size_id','=','size.id')->join('color','color.id','=','product_detail.color_id')->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
 		$listColor = Size::select('color.name', 'color.id')->distinct()->join('product_detail','product_detail.size_id','=','size.id')->join('color','color.id','=','product_detail.color_id')->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
@@ -115,12 +114,10 @@ class IndexController extends Controller
 	}
 	public function postProductDetail($id, Request $request)
 	{
-		
-		
 		$size = Size::findOrFail($request->slcSize);
 		$color = Color::findOrFail($request->slcColor);
 		$productDetail = ProductDetail::where('product_id',$id)->where('size_id',$request->slcSize)->where('color_id',$request->slcColor)->get()->first();
-		$productBuy = Product::findOrFail($productDetail['product_id']);
+		$productBuy = Product::findOrFail($id);
 
 		Cart::add(['id'=>$productDetail['id'], 'name'=>$productBuy['name'],'qty'=>$request['txtQuant'],'price'=>$productBuy['price'],'options'=>['image'=>$productBuy['image'], 'size' => $size['size'], 'color'=>$color['name']]]);
 		$productInCart = Cart::content();
