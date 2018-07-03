@@ -119,6 +119,7 @@ class IndexController extends Controller
 		$productDetail = ProductDetail::select('*')->where('product_id',$id)->where('color_id',$request->slcColor)->where('size_id',$request->slcSize)->get();
 		$productBuy = Product::findOrFail($id);
 		echo var_dump($productDetail);
+		echo var_dump($request);
 		Cart::add(['id'=>$productDetail['id'], 'name'=>$productBuy['name'],'qty'=>$request['txtQuant'],'price'=>$productBuy['price'],'options'=>['image'=>$productBuy['image'], 'size' => $request->slcSize, 'color' => $request->slcColor]]);
 		$productInCart = Cart::content();
 		return redirect('cart');
