@@ -23,7 +23,7 @@
         <tr class="odd gradeX" align="center">
             <td>{{$item['id']}}</td>
             <td>{{$item['product_id']}}</td>
-            <td>{{$item['size_id']}} VNĐ</td>
+            <td>{{$item['size_id']}}</td>
             <td>{{$item['color_id']}}</td>
             <td>{{$item['quantity']}}</td>
             <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/product/delete/{{$item['id']}}"> Delete</a></td>
