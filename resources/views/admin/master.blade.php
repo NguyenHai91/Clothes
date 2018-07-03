@@ -109,6 +109,16 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
+                            <a href="admin/product/list"><i class="fa fa-cube fa-fw"></i> Product Detail<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="admin/detail/list">List Product Detail</a>
+                                </li>
+
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
                             <a href="admin/user/list"><i class="fa fa-users fa-fw"></i> User<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>

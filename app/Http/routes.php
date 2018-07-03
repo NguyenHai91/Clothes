@@ -61,6 +61,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 	// Route::get('logout', 'Auth\AuthController@getLogout');
 	Route::group(['prefix' => 'detail'], function ()
 	{
+		Route::get('list','ProductDetailController@getList');
 		Route::get('add/{id}','ProductDetailController@getAdd');
 		Route::post('add/{id}','ProductDetailController@postAdd');
 		Route::get('edit/{id}','ProductDetailController@getEdit');

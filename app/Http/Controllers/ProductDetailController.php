@@ -11,6 +11,11 @@ use App\Color;
 
 class ProductDetailController extends Controller
 {
+	public function getList()
+	{
+		$listDetail = ProductDetail::all();
+		return view('admin.detail.list',compact('listDetail'));
+	}
 	public function getAdd($idProduct)
 	{
 		$size = Size::all();
