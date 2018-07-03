@@ -24,17 +24,18 @@ class DatabaseSeeder extends Seeder
     		'avatar' => '123avatar',
     		'active' => 1,
     	]);
-        DB::table('size')->insert(
-            [
-                'size' => 'S'
-            ],[
-                'size' => 'M'
-            ],[
-                'size' => 'L'
-            ],[
-                'size' => 'XL'
-            ]
-        );
+        DB::table('size')->insert([
+            'size' => 'S'
+        ]);
+        DB::table('size')->insert([
+            'size' => 'M'
+        ]);
+        DB::table('size')->insert([
+            'size' => 'L'
+        ]);
+        DB::table('size')->insert([
+            'size' => 'XL'
+        ]);
         
     }
 }
