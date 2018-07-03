@@ -18,8 +18,8 @@
         @foreach($users as $us)
         <?php $i++; ?>
         <tr class="odd gradeX" align="center">
-            <td>{{$i}}</td>
-            <td>{{$us['name']}}</td>
+            <td>{{$us['id']}}</td>
+            <td>{{$us['username']}}</td>
             <td>{{$us['password']}}</td>
             <td>{{$us['email']}}</td>
             <td>{{$us['level']}}</td>
