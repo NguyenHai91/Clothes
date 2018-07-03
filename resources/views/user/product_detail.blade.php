@@ -28,7 +28,7 @@
 					<h4><strong>Price: ${{$product['price']}}</strong></h4>
 				</div>
 				<div class="span5">
-					<form action="" class="form-inline" method="post">
+					<form action="product_detail/{{$product->id}}" class="form-inline" method="post">
 						<input type="hidden" name="_token" value="{{csrf_token('')}}">
 						<p>&nbsp;</p>
 						<label>Qty:
