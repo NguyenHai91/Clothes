@@ -40,10 +40,9 @@
             "php artisan key:generate"
         ],
         "deploy": [
-         
-         "php artisan key:generate",
-         "php artisan migrate",
-     ],
+           "php artisan key:generate",
+           "php artisan migrate"
+       ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
             "php artisan optimize",
