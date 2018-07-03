@@ -43,6 +43,7 @@ class ProductController extends Controller
 		$product['active'] = $request['rdoActive'];
 		$product['image'] = $fileName;
 		$product['number_order'] = 0;
+		$product['view'] = 0;
 		
 		$request->file('fImages')->move('upload/',$fileName);
 		$product->save();
