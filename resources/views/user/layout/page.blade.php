@@ -20,7 +20,6 @@
 	@yield('css')
 	
 
-
 </head>
 <body>
 	<div id="top-bar" class="container">

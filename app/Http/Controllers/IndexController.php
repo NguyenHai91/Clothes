@@ -120,9 +120,9 @@ class IndexController extends Controller
 		$size = Size::findOrFail($request->slcSize);
 		$color = Color::findOrFail($request->slcColor);
 		$productDetail = ProductDetail::where('product_id',$id)->where('size_id',$request->slcSize)->where('color_id',$request->slcColor)->get()->first();
-		$productBuy = Product::find($productDetail['product_id']);
+		$productBuy = Product::findOrFail($productDetail['product_id']);
 
-		Cart::add(['id'=>$id, 'name'=>$productBuy['name'],'qty'=>$request['txtQuant'],'price'=>$productBuy['price'],'options'=>['image'=>$productBuy['image'], 'size' => $size['size'], 'color'=>$color['name']]]);
+		Cart::add(['id'=>$productDetail['id'], 'name'=>$productBuy['name'],'qty'=>$request['txtQuant'],'price'=>$productBuy['price'],'options'=>['image'=>$productBuy['image'], 'size' => $size['size'], 'color'=>$color['name']]]);
 		$productInCart = Cart::content();
 		return redirect('cart');
 	}
