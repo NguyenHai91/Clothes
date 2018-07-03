@@ -29,14 +29,14 @@ class CreateContrain extends Migration
             $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade')->onUpdate('cascade');
         });
 
-        Schema::table('category', function (Blueprint $table)
+        Schema::table('product', function (Blueprint $table)
         {
-            $table->foreign('id')->references('category_id')->on('product')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade')->onUpdate('cascade');
         });
-        Schema::table('transaction', function (Blueprint $table)
+        Schema::table('order', function (Blueprint $table)
         {
 
-            $table->foreign('id')->references('transaction_id')->on('order')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('transaction_id')->references('id')->on('transaction')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
