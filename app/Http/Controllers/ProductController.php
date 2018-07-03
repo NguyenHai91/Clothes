@@ -42,6 +42,7 @@ class ProductController extends Controller
 		$product['brand'] = $request['txtBrand'];
 		$product['active'] = $request['rdoActive'];
 		$product['image'] = $fileName;
+		$product['number_order'] = 0;
 		
 		$request->file('fImages')->move('upload/',$fileName);
 		$product->save();
