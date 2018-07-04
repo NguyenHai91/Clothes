@@ -9,7 +9,7 @@
     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
             <tr align="center">
-                <th>Index</th>
+                <th>id</th>
                 <th>Name</th>
                 <th>Category Parent</th>
                 <th>Gender</th>
@@ -22,7 +22,7 @@
             @foreach($data as $item)
             <?php $index++; ?>
             <tr class="odd gradeX" align="center">
-                <td>{{$index}}</td>
+                <td>{{$item->id}}</td>
                 <td>{{$item->name}}</td>
                 <td>
                     @if($item->parent_id == 0)
