@@ -33,8 +33,8 @@ class IndexController extends Controller
 		}
 		
 		$cate = Category::all();
-		$sportCates = Category::where('parent_id','=',39)->orWhere('parent_id','=',40)->get();
-		$accessoryCates = Category::where('parent_id','=',41)->orWhere('parent_id','=',42)->get();
+		$sportCates = Category::where('parent_id','=',9)->orWhere('parent_id','=',10)->get();
+		$accessoryCates = Category::where('parent_id','=',13)->orWhere('parent_id','=',14)->get();
 		$randProducts = null;
 		if (count(Product::all()) > 0) {
 			$randProducts = Product::all()->random()->take(10)->get();
@@ -135,8 +135,6 @@ class IndexController extends Controller
 			$data = ['status' => 'error','error' => $error, 'maxQty' => $maxQty];
 			return $data;
 		}
-		
-		
 
 	}
 	public function getCart()
