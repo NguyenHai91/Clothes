@@ -240,6 +240,10 @@ class IndexController extends Controller
 		$user->phone = $request->txtPhone;
 		$user->address = $request->txtAddress;
 		$user->password = $request->txtPass;
+		$user->fullname = $request->txtFullName;
+		$user->level = 0;
+		$user->avatar = '';
+		$user->active = 1;
 		$user->save();
 		
 		if (!Cookie::has('email')) {
