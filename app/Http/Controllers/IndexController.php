@@ -106,7 +106,7 @@ class IndexController extends Controller
 	{
 		$product = Product::findOrFail($id);
 		$listSize = Size::select('size.size', 'size.id')->distinct()->join('product_detail','product_detail.size_id','=','size.id')->join('color','color.id','=','product_detail.color_id')->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
-		$listColor = Size::select('color.name', 'color.id')->distinct()->join('product_detail','product_detail.size_id','=','size.id')->join('color','color.id','=','product_detail.color_id')->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
+		$listColor = Color::select('color.name', 'color.id')->distinct()->join('product_detail','product_detail.size_id','=','size.id')->join('color','color.id','=','product_detail.color_id')->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
 		
 		Product::where('id',$id)->increment('view');
 		$relateProduct = Product::where('category_id',$product['category_id'])->orderBy('created_at','desc')->take(9)->get();
@@ -118,7 +118,6 @@ class IndexController extends Controller
 		$color = Color::findOrFail($request->slcColor);
 		$productDetail = ProductDetail::select('*')->where('product_id',$id)->where('color_id',$request->slcColor)->where('size_id',$request->slcSize)->get()->first();
 		$productBuy = Product::findOrFail($id);
-		echo var_dump($productDetail);
 		Cart::add(['id'=>$productDetail['id'], 'name'=>$productBuy['name'],'qty'=>$request['txtQuant'],'price'=>$productBuy['price'],'options'=>['image'=>$productBuy['image'], 'size' => $request->slcSize, 'color' => $request->slcColor]]);
 		$productInCart = Cart::content();
 		return redirect('cart');
