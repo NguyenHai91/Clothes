@@ -313,12 +313,12 @@ class IndexController extends Controller
 				$order->save();
 			}
 			Cart::destroy();
-			$data = ['name' => 'Info order','message' => 'Your buy products is success','email' => $transaction->email];
-			// Mail::send('mail', $data, function ($msg) use ($transaction)
-			// {
-			// 	$msg->from('aloha4391@gmail.com', 'Info order');
-			// 	$msg->to($transaction->email)->subject('Your order is success');
-			// });
+			$data = ['name' => 'Info order','message' => "Your buy products is success",'email' => $transaction->email];
+			Mail::send('mail', $data, function ($msg) use ($transaction)
+			{
+				$msg->from('aloha4391@gmail.com', 'Info order');
+				$msg->to($transaction->email)->subject('Your order is success');
+			});
 			return redirect('success');
 		}
 		
