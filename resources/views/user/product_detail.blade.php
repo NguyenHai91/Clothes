@@ -266,6 +266,7 @@
 				},
 				'type': 'GET',
 				'url': 'product_detail/update/' + $id,
+				crossDomain: true,
 				'cache': false,
 				'data': {'id':$id, 'qty':$qty, 'sizeId':$sizeId, 'colorId':$colorId},
 				success: function (response) {
