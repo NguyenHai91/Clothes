@@ -304,8 +304,8 @@ class IndexController extends Controller
 				$order->transaction_id = $transaction->id;
 				$order->product_id = $prodDetail->product_id;
 				$order->quantity = $item->qty;
-				$order->size = $item->options->size;
-				$order->color = $item->options->color;
+				$order->size = $prodDetail->size_id;
+				$order->color = $prodDetail->color_id;
 				$order->amount = (int)$item->qty * (double)$item->price;
 				$order->note = 'order';
 				$order->save();
