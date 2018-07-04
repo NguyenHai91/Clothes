@@ -290,6 +290,7 @@ class IndexController extends Controller
 			$transaction['status'] = 0;
 			$transaction['payment'] = 'Cash';
 			$transaction['payment_info'] = '';
+			$transaction['message'] = $request->txtMessage;
 			$transaction['username'] = $request['txtName'];
 			$transaction['amount'] = (double)(Cart::total());
 			$transaction['security'] = $request['_token'];
