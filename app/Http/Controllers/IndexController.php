@@ -105,12 +105,13 @@ class IndexController extends Controller
 	public function getProductDetail($id)
 	{
 		$product = Product::findOrFail($id);
+		$listProductDetail = ProductDetail::where('product_id',$id)->get();
 		$listSize = Size::select('size.size', 'size.id')->distinct()->join('product_detail','product_detail.size_id','=','size.id')->join('color','color.id','=','product_detail.color_id')->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
-		$listColor = Color::select('color.name', 'color.id')->distinct()->join('product_detail','product_detail.color_id','=','color.id')->join('size','size.id','=','product_detail.size_id')->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
+		$listColor = Color::select('color.name', 'color.id')->distinct()->join('product_detail','product_detail.color_id','=','color.id')->join('size','size.id','=',$listSize[0]->id)->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
 		
 		Product::where('id',$id)->increment('view');
 		$relateProduct = Product::where('category_id',$product['category_id'])->orderBy('created_at','desc')->take(9)->get();
-		return view('user.product_detail', compact('product','relateProduct','listSize','listColor'));
+		return view('user.product_detail', compact('product','relateProduct','listSize','listColor', 'listProductDetail'));
 	}
 	public function postProductDetail($id, Request $request)
 	{
