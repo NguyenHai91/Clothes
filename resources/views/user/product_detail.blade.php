@@ -45,9 +45,10 @@
 							<select id="slcColor" class="span1" name="slcColor">
 								@foreach($listColor as $color)
 								<option value="{{$color->id}}">{{$color->name}}</option>
+								<input class="span1" type="color" name="iptColor" value="{{$color->code_color}}" disabled>
 								@endforeach
 							</select>
-							<input class="span1" type="color" name="iptColor" value="{{$listColor[0]->code_color}}" disabled>
+							
 						</label>
 						<button class="btn btn-inverse" type="submit">Add to cart</button>
 						<div class="detail-alert alert alert-danger " style="display: none">
