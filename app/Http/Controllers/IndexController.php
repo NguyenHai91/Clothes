@@ -305,9 +305,10 @@ class IndexController extends Controller
 				$order->transaction_id = $transaction->id;
 				$order->product_id = $item->id;
 				$order->quantity = $item->qty;
-				$order->size = 1;
-				$order->color = 1;
+				$order->size = $item->options->size;
+				$order->color = $item->options->color;
 				$order->amount = (int)$item->qty * (double)$item->price;
+				$order->note = 'order';
 				$order->save();
 			}
 			Cart::destroy();
