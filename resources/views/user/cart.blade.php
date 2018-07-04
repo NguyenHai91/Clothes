@@ -97,6 +97,9 @@
 			var cartAlert = $('div.cart-alert');
 			var msg = cartAlert.find('span.message');
 			$.ajax({
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
 				'type': 'GET',
 				'url' : 'cart/update/'+ id +'/'+ qty,
 				'cache' : false,

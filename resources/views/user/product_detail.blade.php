@@ -252,6 +252,9 @@
 			$alert = $('div.detail-alert');
 			$msg = $alert.find('span.message');
 			$.ajax({
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
 				'type': 'GET',
 				'url': 'product_detail/update/' + $id,
 				'cache': false,
