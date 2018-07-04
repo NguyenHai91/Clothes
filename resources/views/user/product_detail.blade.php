@@ -14,7 +14,7 @@
 					<ul class="thumbnails small">
 						@foreach($product->productImages as $item)	
 						<li class="span1">
-							<a href="upload/{{$item['image']}}" class="thumbnail" data-fancybox-group="group1" title="Description 2"><img src="upload/{{$item['image']}}" alt=""></a>
+							<a href="upload/{{$item->image}}" class="thumbnail" data-fancybox-group="group1" title="Description 2"><img src="upload/{{$item->image}}" alt=""></a>
 						</li>								
 						@endforeach
 					</ul>
