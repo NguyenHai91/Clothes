@@ -301,9 +301,10 @@ class IndexController extends Controller
 			$itemInCart = Cart::content();
 			foreach ($itemInCart as $item) {
 				ProductDetail::where('id',$item->id)->decrement('quantity',$item->qty);
+				$prodDetail = ProductDetail::findOrFail($item->id);
 				$order = new Order;
 				$order->transaction_id = $transaction->id;
-				$order->product_id = $item->id;
+				$order->product_id = $prodDetail->product_id;
 				$order->quantity = $item->qty;
 				$order->size = $item->options->size;
 				$order->color = $item->options->color;
