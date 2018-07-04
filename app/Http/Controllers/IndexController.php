@@ -289,7 +289,7 @@ class IndexController extends Controller
 			$transaction['address'] = $request['txtAddress'];
 			$transaction['status'] = 0;
 			$transaction['username'] = $request['txtName'];
-			$transaction['amount'] = Cart::total();
+			$transaction['amount'] = (double)(Cart::total());
 			$transaction['security'] = $request['_token'];
 			if (Auth::check()) {
 				$transaction['user_id'] = $request[Auth::id()];
