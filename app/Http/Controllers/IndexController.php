@@ -288,6 +288,8 @@ class IndexController extends Controller
 			$transaction['phone'] = $request['txtPhone'];
 			$transaction['address'] = $request['txtAddress'];
 			$transaction['status'] = 0;
+			$transaction['payment'] = 'Cash';
+			$transaction['payment_info'] = '';
 			$transaction['username'] = $request['txtName'];
 			$transaction['amount'] = (double)(Cart::total());
 			$transaction['security'] = $request['_token'];
