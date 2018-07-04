@@ -107,7 +107,7 @@ class IndexController extends Controller
 		$product = Product::findOrFail($id);
 		$listProductDetail = ProductDetail::where('product_id',$id)->get();
 		$listSize = Size::select('size.size', 'size.id')->distinct()->join('product_detail','product_detail.size_id','=','size.id')->join('color','color.id','=','product_detail.color_id')->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
-		$listColor = Color::select('color.name', 'color.id')->distinct()->join('product_detail','product_detail.color_id','=','color.id')->where('size_id','=',$listSize[0]->id)->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
+		$listColor = Color::select('color.name', 'color.id', 'color.code_color')->distinct()->join('product_detail','product_detail.color_id','=','color.id')->where('size_id','=',$listSize[0]->id)->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
 		
 		Product::where('id',$id)->increment('view');
 		$relateProduct = Product::where('category_id',$product['category_id'])->orderBy('created_at','desc')->take(9)->get();
