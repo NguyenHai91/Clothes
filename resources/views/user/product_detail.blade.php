@@ -245,7 +245,7 @@
 						console.log(response['listColor']);
 						$listColor = response['listColor'];
 						$htmlListColor = '';
-						$.each($listColor,function (ele) {
+						$.each($listColor,function (index, ele) {
 							$htmlListColor += '<option value="'+ ele['code_color'] + '">' + ele['name'] + '</option>';
 						});
 						console.log($htmlListColor);
