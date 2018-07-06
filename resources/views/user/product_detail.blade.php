@@ -236,21 +236,21 @@
 				success: function (response) {
 					$alert.css('display','none');
 					console.log(response);
-					// if (response['status'] == 'error') {
-					// 	$('#txtQuant').val(response['maxQty']);
-					// 	$alert.css('display','block');
-					// 	$msg.text(response['error']);
+					if (response['status'] == 'error') {
+						$('#txtQuant').val(response['maxQty']);
+						$alert.css('display','block');
+						$msg.text(response['error']);
 
-					// } else if(response['status'] == 'success') {
-					// 	console.log(response['listColor']);
-					// 	$listColor = response['listColor'];
-					// 	$htmlListColor = '';
-					// 	$listColor.each(function (ele) {
-					// 		$htmlListColor += '<option value="'+ ele['code_color'] + '">' + ele['name'] + '</option>';
-					// 	});
-					// 	console.log($htmlListColor);
-					// 	$('#colorId').html($htmlListColor);
-					// }
+					} else if(response['status'] == 'success') {
+						console.log(response['listColor']);
+						$listColor = response['listColor'];
+						$htmlListColor = '';
+						$listColor.each(function (ele) {
+							$htmlListColor += '<option value="'+ ele['code_color'] + '">' + ele['name'] + '</option>';
+						});
+						console.log($htmlListColor);
+						$('#colorId').html($htmlListColor);
+					}
 				}
 
 			});
