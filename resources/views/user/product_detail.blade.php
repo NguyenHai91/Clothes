@@ -246,7 +246,16 @@
 						$listColor = response['listColor'];
 						$('#colorId').empty();
 						$.each($listColor,function (index, el) {
-							var option = $('<option></option>').attr("value",el['id']).text(el['name']);
+							var option = null;
+							if (index == 0) {
+								option = $('<option></option>')
+								.attr("value",el['id'])
+								.attr("selected",true)
+								.text(el['name']);
+							} else {
+								option = $('<option></option>').attr("value",el['id']).text(el['name']);
+							}
+							console.log(option);
 							$('#colorId').append(option);
 						});
 						
