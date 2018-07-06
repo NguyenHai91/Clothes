@@ -235,7 +235,7 @@
 				'data': {'id':$id, 'qty':$qty, 'sizeId':$sizeId, 'colorId':$colorId},
 				success: function (response) {
 					$alert.css('display','none');
-					console.log(response['listColor']);
+					console.log(response);
 					// if (response['status'] == 'error') {
 					// 	$('#txtQuant').val(response['maxQty']);
 					// 	$alert.css('display','block');
