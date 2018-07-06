@@ -137,7 +137,7 @@ class IndexController extends Controller
 			$data = ['status' => 'error','error' => $error, 'maxQty' => $maxQty];
 			return $data;
 		} else {
-			$data = ['status' => 'success', 'maxQty' => $maxQty, 'listColor' => $listColor];
+			$data = ['status' => 'success', 'listColor' => $listColor];
 			return $data;
 		}
 
