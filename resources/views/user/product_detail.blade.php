@@ -230,7 +230,7 @@
 			$msg = $alert.find('span.message');
 			$.ajax({
 				'type': 'GET',
-				'url': 'product_detail/update/' + $id,
+				'url': 'product_detail/update_size/' + $id,
 				'cache': false,
 				'data': {'id':$id, 'qty':$qty, 'sizeId':$sizeId, 'colorId':$colorId},
 				success: function (response) {

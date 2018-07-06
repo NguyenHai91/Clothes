@@ -25,7 +25,7 @@ Route::get('brand/{brandname}', 'IndexController@getProductInBrand');
 Route::get('product_detail/{id}', 'IndexController@getProductDetail');
 Route::post('product_detail/{id}', 'IndexController@postProductDetail');
 Route::get('product_detail/update/{id}', 'IndexController@updateProductDetail');
-
+Route::get('product_detail/update_size/{id}', 'IndexController@updateProductSize');
 
 Route::get('cart', 'IndexController@getCart');
 Route::get('cart/delete/{rowid}', 'IndexController@deleteProductWithRowId');
