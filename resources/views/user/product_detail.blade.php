@@ -235,21 +235,22 @@
 				'data': {'id':$id, 'qty':$qty, 'sizeId':$sizeId, 'colorId':$colorId},
 				success: function (response) {
 					$alert.css('display','none');
-					if (response['status'] == 'error') {
-						$('#txtQuant').val(response['maxQty']);
-						$alert.css('display','block');
-						$msg.text(response['error']);
+					console.log(response['listColor']);
+					// if (response['status'] == 'error') {
+					// 	$('#txtQuant').val(response['maxQty']);
+					// 	$alert.css('display','block');
+					// 	$msg.text(response['error']);
 
-					} else if(response['status'] == 'success') {
-						console.log(response['listColor']);
-						$listColor = response['listColor'];
-						$htmlListColor = '';
-						$listColor.each(function (ele) {
-							$htmlListColor += '<option value="'+ ele['code_color'] + '">' + ele['name'] + '</option>';
-						});
-						console.log($htmlListColor);
-						$('#colorId').html($htmlListColor);
-					}
+					// } else if(response['status'] == 'success') {
+					// 	console.log(response['listColor']);
+					// 	$listColor = response['listColor'];
+					// 	$htmlListColor = '';
+					// 	$listColor.each(function (ele) {
+					// 		$htmlListColor += '<option value="'+ ele['code_color'] + '">' + ele['name'] + '</option>';
+					// 	});
+					// 	console.log($htmlListColor);
+					// 	$('#colorId').html($htmlListColor);
+					// }
 				}
 
 			});
