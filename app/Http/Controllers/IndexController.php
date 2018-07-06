@@ -130,7 +130,10 @@ class IndexController extends Controller
 		$colorId = $_GET['colorId'];
 		$productDetail = ProductDetail::select('*')->where('product_id',$id)->where('size_id',$sizeId)->where('color_id',$colorId)->get()->first();
 		$listColor = Color::select('color.name', 'color.id', 'color.code_color')->distinct()->join('product_detail','product_detail.color_id','=','color.id')->where('size_id','=',$sizeId)->where('product_detail.product_id',$id)->where('quantity','>',0)->get();
-		return $listColor;
+
+		$data = ['status' => 'success', 'maxQty' => $maxQty, 'listColor' => $listColor];
+		return $data;
+
 		// if ($productDetail->quantity < $qty) {
 		// 	$maxQty = $productDetail->quantity;
 		// 	$error = "Quantity not enough, only ". $maxQty ." items in store !";
