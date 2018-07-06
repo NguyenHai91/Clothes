@@ -244,12 +244,12 @@
 					} else if(response['status'] == 'success') {
 						console.log(response['listColor']);
 						$listColor = response['listColor'];
-						$htmlListColor = '';
-						$.each($listColor,function (index, ele) {
-							$htmlListColor += '<option value="'+ ele['id'] + '">' + ele['name'] + '</option>';
+						$('#colorId').empty();
+						$.each($listColor,function (index, el) {
+							var option = $('<option></option>').attr("value",el['id']).text(el['name']);
+							$('#colorId').append(option);
 						});
-						console.log($htmlListColor);
-						$('#colorId').html($htmlListColor);
+						
 					}
 				}
 
