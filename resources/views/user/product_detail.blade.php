@@ -194,6 +194,7 @@
 		$('#myCarousel-2').carousel({
 			interval: 2500
 		});
+		
 		// add event for quantity 
 		$('#txtQuant').blur(function (e) {
 			$qty = $('#txtQuant').val();
@@ -239,6 +240,13 @@
 						$alert.css('display','block');
 						$msg.text(response['error']);
 
+					} else if(response['status'] == 'success') {
+						$listColor = response['listColor'];
+						$htmlListColor = '';
+						$listColor.each(function (ele) {
+							$htmlListColor += '<option value="'+ ele['code_color'] + '">' + ele['name'] + '</option>';
+						});
+						$('#colorId').html($htmlListColor);
 					}
 				}
 
