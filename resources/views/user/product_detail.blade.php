@@ -45,10 +45,10 @@
 							<select id="slcColor" class="span1" name="slcColor">
 								@foreach($listColor as $color)
 								<option value="{{$color->id}}">{{$color->name}}</option>
-								<input class="span1" type="color" name="iptColor" value="{{$color->code_color}}">
+								
 								@endforeach
 							</select>
-							
+							<input id="iptColor" class="span1" type="color" name="iptColor" value="{{$listColor[0]->code_color}}" disable>
 						</label>
 						<button class="btn btn-inverse" type="submit">Add to cart</button>
 						<div class="detail-alert alert alert-danger " style="display: none">
@@ -256,10 +256,12 @@
 							} else {
 								option = $('<option></option>').attr("value",el['id']).text(el['name']);
 							}
+
 							console.log(option);
 							$('#slcColor').append(option);
 						});
-
+						$iptColor = $('#iptColor');
+						$iptColor.attr('value',$listColor[0]['code_color']);
 					}
 				}
 
