@@ -236,30 +236,31 @@
 				success: function (response) {
 					$alert.css('display','none');
 					console.log(response);
-					if (response['status'] == 'error') {
-						$('#txtQuant').val(response['maxQty']);
-						$alert.css('display','block');
-						$msg.text(response['error']);
+					$('#colorId').empty();
+					// if (response['status'] == 'error') {
+					// 	$('#txtQuant').val(response['maxQty']);
+					// 	$alert.css('display','block');
+					// 	$msg.text(response['error']);
 
-					} else if(response['status'] == 'success') {
-						console.log(response['listColor']);
-						$listColor = response['listColor'];
-						$('#colorId').empty();
-						$.each($listColor,function (index, el) {
-							var option = null;
-							if (index == 0) {
-								option = $('<option></option>')
-								.attr("value",el['id'])
-								.attr("selected",true)
-								.text(el['name']);
-							} else {
-								option = $('<option></option>').attr("value",el['id']).text(el['name']);
-							}
-							console.log(option);
-							$('#colorId').append(option);
-						});
-						
-					}
+					// } else if(response['status'] == 'success') {
+					// 	console.log(response['listColor']);
+					// 	$listColor = response['listColor'];
+					// 	$('#colorId').empty();
+					// 	$.each($listColor,function (index, el) {
+					// 		var option = null;
+					// 		if (index == 0) {
+					// 			option = $('<option></option>')
+					// 			.attr("value",el['id'])
+					// 			.attr("selected","selected")
+					// 			.text(el['name']);
+					// 		} else {
+					// 			option = $('<option></option>').attr("value",el['id']).text(el['name']);
+					// 		}
+					// 		console.log(option);
+					// 		$('#colorId').append(option);
+					// 	});
+					
+					// }
 				}
 
 			});
