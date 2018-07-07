@@ -116,6 +116,7 @@
 				success: function(response) {
 					cartAlert.css('display','none');
 					txtQuant.css('border','');
+					console.log(response);
 					if (response['status'] == 'error') {
 						cartAlert.css('display','block');
 						msg.text(response['error']);
