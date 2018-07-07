@@ -48,7 +48,7 @@
 								
 								@endforeach
 							</select>
-							<input id="iptColor" class="span1" type="color" name="iptColor" value="{{$listColor[0]->code_color}}" disable>
+							<input id="iptColor" class="span1" type="color" name="iptColor" value="{{$listColor[0]->code_color}}" disabled>
 						</label>
 						<button class="btn btn-inverse" type="submit">Add to cart</button>
 						<div class="detail-alert alert alert-danger " style="display: none">
@@ -235,7 +235,7 @@
 				'data': {'id':$id, 'qty':$qty, 'sizeId':$sizeId, 'colorId':$colorId},
 				success: function (response) {
 					$alert.css('display','none');
-					console.log(response);
+					
 					$('#slcColor').empty();
 					if (response['status'] == 'error') {
 						$('#txtQuant').val(response['maxQty']);
@@ -257,7 +257,7 @@
 								option = $('<option></option>').attr("value",el['id']).text(el['name']);
 							}
 
-							console.log(option);
+							
 							$('#slcColor').append(option);
 						});
 						$iptColor = $('#iptColor');
