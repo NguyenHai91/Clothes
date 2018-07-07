@@ -236,7 +236,7 @@
 				success: function (response) {
 					$alert.css('display','none');
 					console.log(response);
-					$('#colorId').empty();
+					$('#slcColor').empty();
 					// if (response['status'] == 'error') {
 					// 	$('#txtQuant').val(response['maxQty']);
 					// 	$alert.css('display','block');
