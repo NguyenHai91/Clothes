@@ -210,7 +210,7 @@ class IndexController extends Controller
 		$id = $item->id;
 		$product = ProductDetail::findOrFail($id);
 		$maxQty = $product->quantity;
-		if ($product->quantity >= $qty) {
+		if ($maxQty >= $qty) {
 			Cart::update($rowId, $qty);
 			$price = (Cart::get($rowId)->price);
 			$sum =  $price * $qty;

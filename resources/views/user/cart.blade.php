@@ -97,18 +97,18 @@
 			var cartAlert = $('div.cart-alert');
 			var msg = cartAlert.find('span.message');
 			$.ajax({
-				contentType: 'application/json',
-				dataType:'jsonp',
-				responseType:'application/json',
-				xhrFields: {
-					withCredentials: false
-				},
-				headers: {
-					'Access-Control-Allow-Credentials' : true,
-					'Access-Control-Allow-Origin':'*',
-					'Access-Control-Allow-Methods':'GET',
-					'Access-Control-Allow-Headers':'application/json',
-				},
+				// contentType: 'application/json',
+				// dataType:'jsonp',
+				// responseType:'application/json',
+				// xhrFields: {
+				// 	withCredentials: false
+				// },
+				// headers: {
+				// 	'Access-Control-Allow-Credentials' : true,
+				// 	'Access-Control-Allow-Origin':'*',
+				// 	'Access-Control-Allow-Methods':'GET',
+				// 	'Access-Control-Allow-Headers':'application/json',
+				// },
 				'type': 'GET',
 				'url' : 'cart/update/'+ id +'/'+ qty,
 				'cache' : false,
